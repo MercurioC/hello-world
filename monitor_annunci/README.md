@@ -17,8 +17,9 @@ Ogni dato (bandi, scadenze, requisiti) e' **da verificare alla fonte** prima di 
 
    - **Gmail:** `SMTP_HOST=smtp.gmail.com`, `SMTP_PORT=587`, `SMTP_USER` = il tuo indirizzo, `SMTP_PASSWORD` = una **password per app** (serve la verifica in due passaggi), non quella normale. Altri provider: cerca "SMTP" sul loro sito.
    - **ntfy:** installa l'app ntfy, inventa un nome lungo e casuale (es. `lavoro-x7k2q9m4p8`: chi lo conosce puo' leggere gli avvisi), iscriviti in app e metti lo stesso nome in `NTFY_TOPIC`. Gli avvisi passano da ntfy.sh (servizio esterno): contengono solo titoli e link di annunci pubblici.
-3. **Prova le fonti:** scheda Actions > "Monitor annunci" > Run workflow > spunta *verifica*. Nel log vedi per ogni fonte se risponde e cosa trova. Le fonti segnate `[KO]` vanno corrette o disattivate.
-4. **Primo avvio vero:** lancia di nuovo senza la spunta. Ricevi un primo elenco di quello che e' gia' presente, poi solo le novita'.
+3. **Prova gli avvisi:** Actions > "Monitor annunci" > Run workflow > spunta *prova_avvisi*. Ricevi una mail intitolata "[Annunci] PROVA - avvisi funzionanti" e/o una notifica sul telefono. Nel log vedi per ogni canale "inviato", "ERRORE" o "non configurato". Non tocca l'elenco degli annunci.
+4. **Prova le fonti:** scheda Actions > "Monitor annunci" > Run workflow > spunta *verifica*. Nel log vedi per ogni fonte se risponde e cosa trova. Le fonti segnate `[KO]` vanno corrette o disattivate.
+5. **Primo avvio vero:** lancia di nuovo senza la spunta. Ricevi un primo elenco di quello che e' gia' presente, poi solo le novita'.
 
 Se nessun avviso va a buon fine, il flusso risulta "fallito" (GitHub te lo segnala) e riprova al giro dopo senza perdere gli annunci.
 

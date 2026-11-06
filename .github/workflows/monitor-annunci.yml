@@ -10,6 +10,10 @@ on:
         description: "Solo verifica delle fonti (nessun avviso, nessun salvataggio)"
         type: boolean
         default: false
+      prova_avvisi:
+        description: "Invia solo un avviso di prova (email/telefono) per controllare che arrivi"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -33,8 +37,21 @@ jobs:
         if: ${{ inputs.verifica }}
         run: python monitor_annunci/monitor.py --verifica
 
+      - name: Avviso di prova
+        if: ${{ inputs.prova_avvisi }}
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+          MAIL_FROM: ${{ secrets.MAIL_FROM }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          NTFY_SERVER: ${{ secrets.NTFY_SERVER }}
+        run: python monitor_annunci/monitor.py --test-avvisi
+
       - name: Controllo annunci
-        if: ${{ !inputs.verifica }}
+        if: ${{ !inputs.verifica && !inputs.prova_avvisi }}
         env:
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
@@ -47,7 +64,7 @@ jobs:
         run: python monitor_annunci/monitor.py
 
       - name: Salva stato
-        if: ${{ !inputs.verifica }}
+        if: ${{ !inputs.verifica && !inputs.prova_avvisi }}
         run: |
           git config user.name "monitor-annunci"
           git config user.email "monitor-annunci@users.noreply.github.com"

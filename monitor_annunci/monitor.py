@@ -285,6 +285,25 @@ def aggiorna_file_md(percorso, nuovi, primo_avvio):
         f.write(intestazione + "\n".join(righe))
 
 
+def test_avvisi():
+    """Manda un avviso di prova ai canali configurati, per controllare che arrivi."""
+    esempio = [{"titolo": "ANNUNCIO DI PROVA - Addetto accoglienza e biglietteria (esempio)",
+                "url": "https://example.com/annuncio-di-prova", "fonte": "Test avvisi",
+                "gruppi": ["Accoglienza, musei, turismo"], "priorita": 1}]
+    adesso = dt.datetime.now(dt.timezone.utc).strftime("%d/%m/%Y %H:%M UTC")
+    corpo = (f"Questa e' una mail di PROVA del monitor annunci ({adesso}).\n"
+             "Se la leggi, gli avvisi via email funzionano. Nessun annuncio reale e' stato trovato.\n\n"
+             + costruisci_testo(esempio, [], False))
+    esiti = {"email": invia_email("[Annunci] PROVA - avvisi funzionanti", corpo),
+             "ntfy": invia_ntfy(esempio, [])}
+    for canale, esito in esiti.items():
+        print(f"{canale}: " + {True: "inviato", False: "ERRORE", None: "non configurato"}[esito])
+    if not any(e is not None for e in esiti.values()):
+        print("Nessun canale configurato: aggiungi i secret (vedi README).", file=sys.stderr)
+        return 1
+    return 0 if any(esiti.values()) else 1
+
+
 # ---------- principale ----------
 
 def main():
@@ -295,7 +314,11 @@ def main():
     ap.add_argument("--filtri", default=os.path.join(BASE, "filtri.json"))
     ap.add_argument("--stato", default=os.path.join(BASE, "seen.json"))
     ap.add_argument("--uscita", default=os.path.join(BASE, "annunci_nuovi.md"))
+    ap.add_argument("--test-avvisi", action="store_true",
+                    help="invia un avviso di prova su email/ntfy e termina (nessun salvataggio)")
     args = ap.parse_args()
+    if args.test_avvisi:
+        return test_avvisi()
     prova = args.prova or args.verifica
 
     fonti = carica(args.fonti, {}).get("fonti", [])
