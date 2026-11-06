@@ -1,0 +1,72 @@
+{
+ "_nota": "Gli indirizzi sono DA VERIFICARE ALLA FONTE. Lancia il flusso 'Monitor annunci' a mano: nel log, il passaggio 'Verifica fonti' dice per ognuna se risponde. Tipi: html (elenco di link), rss/atom (feed). 'priorita_zona': 1 Lucca, 2 Pisa/Versilia, 3 Firenze, 9 altro. 'parole': cerca solo queste parole (utile per trovare la pagina 'Lavora con noi'). 'tutti': avvisa di ogni nuovo link della pagina (la prima lettura e' solo un riferimento).",
+ "fonti": [
+  {
+   "nome": "Google Alerts - accoglienza musei Lucca",
+   "tipo": "rss",
+   "url": "INCOLLA-QUI-L-URL-DEL-FEED-RSS-DI-GOOGLE-ALERTS",
+   "priorita_zona": 1,
+   "attiva": false,
+   "verificata_il": null,
+   "nota": "Crea l'alert su google.com/alerts (es. \"addetto accoglienza\" museo Lucca), consegna: Feed RSS, poi copia qui l'indirizzo del feed."
+  },
+  {
+   "nome": "Google Alerts - biglietteria / info point Toscana",
+   "tipo": "rss",
+   "url": "INCOLLA-QUI-L-URL-DEL-FEED-RSS-DI-GOOGLE-ALERTS",
+   "priorita_zona": 9,
+   "attiva": false,
+   "verificata_il": null,
+   "nota": "Seconda ricerca, es. biglietteria OR \"info point\" Toscana lavoro."
+  },
+  {
+   "nome": "Finestre sull'Arte (esplora pagina lavoro)",
+   "tipo": "html",
+   "url": "https://www.finestresullarte.info/",
+   "parole": ["lavora con noi", "lavoro", "offerte di lavoro", "selezione", "bando", "opportunita"],
+   "priorita_zona": 9,
+   "attiva": true,
+   "verificata_il": null,
+   "nota": "Sonda: segnala una volta i link con parole da offerta di lavoro, per trovare l'indirizzo giusto da usare come fonte stabile."
+  },
+  {
+   "nome": "Lucca Crea (esplora pagina lavoro)",
+   "tipo": "html",
+   "url": "https://www.luccacrea.it/",
+   "parole": ["lavora con noi", "lavoro", "staff", "selezione", "volontar", "candidatur"],
+   "priorita_zona": 1,
+   "attiva": true,
+   "verificata_il": null,
+   "nota": "Sonda: vedi sopra. Sito/dominio da verificare."
+  },
+  {
+   "nome": "Comune di Lucca (esplora bandi e avvisi)",
+   "tipo": "html",
+   "url": "https://www.comune.lucca.it/",
+   "parole": ["bando", "avviso", "concorso", "selezione", "lavora con noi", "museo", "iat$", "turistic"],
+   "priorita_zona": 1,
+   "attiva": true,
+   "verificata_il": null,
+   "nota": "Sonda: poi sostituire con la pagina bandi/concorsi o albo pretorio. Verificare chi gestisce IAT e musei civici."
+  },
+  {
+   "nome": "ToscanaLavoro (pagina offerte)",
+   "tipo": "html",
+   "url": "INCOLLA-QUI-L-URL-DELLA-RICERCA-OFFERTE",
+   "priorita_zona": 9,
+   "attiva": false,
+   "verificata_il": null,
+   "nota": "Se la pagina e' costruita da JavaScript o richiede accesso non e' leggibile da qui: usa le notifiche del portale."
+  },
+  {
+   "nome": "Pagina 'Lavora con noi' di un museo o cooperativa",
+   "tipo": "html",
+   "url": "INCOLLA-QUI-L-URL",
+   "tutti": true,
+   "priorita_zona": 1,
+   "attiva": false,
+   "verificata_il": null,
+   "nota": "Modello: copia questo blocco per ogni ente. Con 'tutti' avvisa di ogni nuovo link comparso nella pagina."
+  }
+ ]
+}

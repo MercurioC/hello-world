@@ -1,0 +1,26 @@
+{
+ "gruppi": {
+  "Accoglienza, musei, turismo": {
+   "attivo": true,
+   "parole": ["accoglienza", "biglietteria", "bigliettai", "front office", "front desk", "info point", "infopoint", "punto informazion", "informazioni turistich", "ufficio turistico", "iat$", "museo", "musei", "museal", "villa storica", "ville storiche", "dimora storica", "dimore storiche", "operatore di sala", "addetto alla sala", "addetti alla sala", "assistente ai servizi culturali", "servizi culturali", "visite guidate", "guida turistica", "sorveglianza"]
+  },
+  "Ospitalita' e reception": {
+   "attivo": true,
+   "parole": ["receptionist", "reception", "concierge", "guest relation", "hospitality", "prenotazioni", "booking", "customer care"]
+  },
+  "Creativo e 3D": {
+   "attivo": true,
+   "parole": ["graphic design", "grafico", "grafica", "3d artist", "modellatore 3d", "blender", "photoshop"]
+  },
+  "Back office (Excel, amministrazione)": {
+   "attivo": false,
+   "parole": ["segreteria", "addetto amministrativo", "impiegato amministrativo", "back office"]
+  }
+ },
+ "escludi": ["notturn", "night", "lavapiatti", "cuoco", "cameriere", "cameriera", "barista"],
+ "luoghi": {
+  "1": ["lucca", "garfagnana", "capannori", "altopascio", "porcari", "montecarlo", "villa basilica", "bagni di lucca", "borgo a mozzano", "barga", "castelnuovo di garfagnana", "mediavalle", "piana di lucca", "camaiore", "massarosa", "seravezza"],
+  "2": ["pisa", "viareggio", "versilia", "forte dei marmi", "pietrasanta", "livorno", "cascina", "pontedera", "san giuliano terme"],
+  "3": ["firenze", "florence", "scandicci", "sesto fiorentino", "empoli"]
+ }
+}
