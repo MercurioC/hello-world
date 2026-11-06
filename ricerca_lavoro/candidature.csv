@@ -1,0 +1,10 @@
+ente;ruolo;canale;data invio;stato;data follow-up;note
+[ESEMPIO] IAT / Ufficio turistico Lucca;Addetto informazioni turistiche;Candidatura spontanea via email;[gg/mm/aaaa];Da inviare;[invio + 10 giorni];Verificare se gestito da Comune o cooperativa; contatto da verificare alla fonte
+[ESEMPIO] Museo civico/statale provincia di Lucca;Addetto accoglienza e biglietteria;Portale ente / Finestre sull'Arte;[gg/mm/aaaa];Da inviare;[invio + 10 giorni];Spesso servizio in appalto: controllare l'azienda aggiudicataria
+[ESEMPIO] Villa storica / dimora visitabile (Lucca);Addetto biglietteria e visite;Email diretta alla direzione;[gg/mm/aaaa];Da inviare;[invio + 10 giorni];Stagionalita possibile: chiedere durata e orario del contratto
+[ESEMPIO] Cooperativa/azienda servizi museali;Operatore di sala / accoglienza;Portale lavora con noi;[gg/mm/aaaa];Da inviare;[invio + 14 giorni];Controllare CCNL applicato e orario settimanale
+[ESEMPIO] Lucca Crea;Staff accoglienza / biglietteria evento;Sito ufficiale (sezione lavoro);[gg/mm/aaaa];Da inviare;[invio + 14 giorni];Probabile lavoro a eventi e non continuativo: da verificare alla fonte
+[ESEMPIO] Ente/museo area Pisa;Addetto accoglienza;LinkedIn / InfoJobs;[gg/mm/aaaa];Da inviare;[invio + 10 giorni];Priorita 2 (dopo Lucca)
+[ESEMPIO] Ente/museo Versilia;Addetto informazioni / biglietteria;Indeed;[gg/mm/aaaa];Da inviare;[invio + 10 giorni];Priorita 2
+[ESEMPIO] Ente/museo Firenze;Addetto accoglienza / front office;LinkedIn;[gg/mm/aaaa];Da inviare;[invio + 10 giorni];Priorita 3: valutare tempi di spostamento
+[ESEMPIO] Bando pubblico (inPA);Assistente ai servizi culturali / profilo analogo;inPA;[gg/mm/aaaa];Da inviare;[scadenza bando];Verificare requisiti e scadenza sul bando; tempi spesso lunghi
