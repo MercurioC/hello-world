@@ -1,0 +1,75 @@
+name: Monitor annunci
+
+on:
+  schedule:
+    # Ogni 2 ore dalle 06:11 alle 20:11 ora italiana circa (orari UTC; GitHub puo' ritardare).
+    - cron: "11 5-19/2 * * *"
+  workflow_dispatch:
+    inputs:
+      verifica:
+        description: "Solo verifica delle fonti (nessun avviso, nessun salvataggio)"
+        type: boolean
+        default: false
+      prova_avvisi:
+        description: "Invia solo un avviso di prova (email/telefono) per controllare che arrivi"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: monitor-annunci
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Verifica fonti
+        if: ${{ inputs.verifica }}
+        run: python monitor_annunci/monitor.py --verifica
+
+      - name: Avviso di prova
+        if: ${{ inputs.prova_avvisi }}
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+          MAIL_FROM: ${{ secrets.MAIL_FROM }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          NTFY_SERVER: ${{ secrets.NTFY_SERVER }}
+        run: python monitor_annunci/monitor.py --test-avvisi
+
+      - name: Controllo annunci
+        if: ${{ !inputs.verifica && !inputs.prova_avvisi }}
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+          MAIL_FROM: ${{ secrets.MAIL_FROM }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          NTFY_SERVER: ${{ secrets.NTFY_SERVER }}
+        run: python monitor_annunci/monitor.py
+
+      - name: Salva stato
+        if: ${{ !inputs.verifica && !inputs.prova_avvisi }}
+        run: |
+          git config user.name "monitor-annunci"
+          git config user.email "monitor-annunci@users.noreply.github.com"
+          git add monitor_annunci/seen.json monitor_annunci/annunci_nuovi.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Aggiorna elenco annunci"
+            git push
+          fi
