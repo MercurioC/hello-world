@@ -1,1 +1,29 @@
-{}
+{
+ "errori": {
+  "Comune di Lucca (esplora bandi e avvisi)": 0,
+  "Finestre sull'Arte - pagina lavoro": 0,
+  "Lucca Crea (esplora pagina lavoro)": 0,
+  "Turismo Lucca (esplora pagina lavoro)": 0
+ },
+ "fonti_inizializzate": [
+  "Finestre sull'Arte - pagina lavoro",
+  "Lucca Crea (esplora pagina lavoro)",
+  "Comune di Lucca (esplora bandi e avvisi)",
+  "Turismo Lucca (esplora pagina lavoro)"
+ ],
+ "ultimo_controllo": "2026-11-07T11:41:49+00:00",
+ "visti": {
+  "6303e358514a36c9": {
+   "data": "2026-11-07",
+   "fonte": "Comune di Lucca (esplora bandi e avvisi)",
+   "titolo": "Concorsi",
+   "url": "https://www.comune.lucca.it/argomento/concorsi/"
+  },
+  "b739a551114616cd": {
+   "data": "2026-11-07",
+   "fonte": "Finestre sull'Arte - pagina lavoro",
+   "titolo": "Modella dinosauri così realistici da sembrare vivi e sogna un museo: il mondo di Mariaelena Mariotti",
+   "url": "https://www.finestresullarte.info/interviste/modella-dinosauri-cosi-realistici-da-sembrare-vivi-mondo-di-mariaelena-mariotti"
+  }
+ }
+}
