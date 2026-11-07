@@ -2,6 +2,17 @@
  "_nota": "Gli indirizzi sono DA VERIFICARE ALLA FONTE. Lancia il flusso 'Monitor annunci' a mano: nel log, il passaggio 'Verifica fonti' dice per ognuna se risponde. Tipi: html (elenco di link), rss/atom (feed). 'priorita_zona': 1 Lucca, 2 Pisa/Versilia, 3 Firenze, 9 altro. 'parole': cerca solo queste parole (utile per trovare la pagina 'Lavora con noi'). 'tutti': avvisa di ogni nuovo link della pagina (la prima lettura e' solo un riferimento).",
  "fonti": [
   {
+   "nome": "Alert via email (LinkedIn, Indeed, InfoJobs, inPA)",
+   "tipo": "email",
+   "cartella": "Annunci",
+   "giorni": 7,
+   "url_annunci": ["linkedin\\.com/(comm/)?jobs/view/", "indeed\\.[a-z.]+/(rc/clk|viewjob|m/viewjob|pagead)", "infojobs\\.it/.*of-i", "inpa\\.gov\\.it/.*(bando|concors)"],
+   "priorita_zona": 9,
+   "attiva": false,
+   "verificata_il": null,
+   "nota": "Legge SOLO l'etichetta Gmail 'Annunci', in sola lettura. Attivala (true) dopo aver creato l'etichetta e il filtro: vedi README, sezione 'Alert via email'. I modelli dei link sono ipotesi: con --verifica controlla che trovi gli annunci della prima email reale e correggi url_annunci."
+  },
+  {
    "nome": "Google Alerts - accoglienza musei Lucca",
    "tipo": "rss",
    "url": "INCOLLA-QUI-L-URL-DEL-FEED-RSS-DI-GOOGLE-ALERTS",
@@ -20,14 +31,13 @@
    "nota": "Seconda ricerca, es. biglietteria OR \"info point\" Toscana lavoro."
   },
   {
-   "nome": "Finestre sull'Arte (esplora pagina lavoro)",
+   "nome": "Finestre sull'Arte - pagina lavoro",
    "tipo": "html",
-   "url": "https://www.finestresullarte.info/",
-   "parole": ["lavora con noi", "lavoro", "offerte di lavoro", "selezione", "bando", "opportunita"],
+   "url": "https://www.finestresullarte.info/flash-news/5c-lavoro.php",
    "priorita_zona": 9,
    "attiva": true,
-   "verificata_il": null,
-   "nota": "Sonda: segnala una volta i link con parole da offerta di lavoro, per trovare l'indirizzo giusto da usare come fonte stabile."
+   "verificata_il": "07/11/2026 (pagina trovata dalla sonda; contenuto da controllare)",
+   "nota": "Trovata dalla verifica del 07/11/2026. Usa i filtri di filtri.json: se i risultati sono pochi o fuori tema, guarda la pagina a mano e regola le parole."
   },
   {
    "nome": "Lucca Crea (esplora pagina lavoro)",
@@ -43,11 +53,21 @@
    "nome": "Comune di Lucca (esplora bandi e avvisi)",
    "tipo": "html",
    "url": "https://www.comune.lucca.it/",
-   "parole": ["bando", "avviso", "concorso", "selezione", "lavora con noi", "museo", "iat$", "turistic"],
+   "parole": ["concors", "assunzion", "lavora con noi", "graduatori", "mobilita", "tempo determinato", "tempo indeterminato"],
+   "priorita_zona": 1,
+   "attiva": true,
+   "verificata_il": "07/11/2026 (la sonda precedente era troppo larga: raccoglieva bandi e contributi non di lavoro)",
+   "nota": "Sonda stretta: segnala solo link che parlano di concorsi e assunzioni. Poi sostituire con la pagina concorsi vera. Verificare chi gestisce IAT e musei civici."
+  },
+  {
+   "nome": "Turismo Lucca (esplora pagina lavoro)",
+   "tipo": "html",
+   "url": "https://www.turismo.lucca.it/",
+   "parole": ["lavora con noi", "lavoro", "selezione", "personale", "collabora"],
    "priorita_zona": 1,
    "attiva": true,
    "verificata_il": null,
-   "nota": "Sonda: poi sostituire con la pagina bandi/concorsi o albo pretorio. Verificare chi gestisce IAT e musei civici."
+   "nota": "Sito turistico di Lucca trovato dalla verifica del 07/11/2026. Sonda per scoprire chi gestisce l'IAT e se ha una pagina per candidature."
   },
   {
    "nome": "ToscanaLavoro (pagina offerte)",

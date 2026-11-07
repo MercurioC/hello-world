@@ -44,6 +44,22 @@ Il programma legge solo feed RSS e pagine pubbliche con elenchi di link, rispett
 
 Alternative agli avvisi: Telegram (si puo' aggiungere), un lettore RSS sul feed di Google Alerts, o solo `annunci_nuovi.md` nel repository.
 
+## Alert via email (LinkedIn, Indeed, InfoJobs, inPA)
+
+Il monitor non legge direttamente quei portali, ma puo' leggere **le email di alert che ti mandano gia'**, raccolte in un'etichetta Gmail. Ogni link di annuncio contenuto diventa un annuncio nel monitor, con gli stessi avvisi.
+
+**Impostazione, una tantum**
+1. Sui portali crea gli alert (parole: museo, biglietteria, accoglienza, front office, info point, receptionist; luoghi: Lucca, Pisa, Viareggio, Firenze; frequenza giornaliera).
+2. In Gmail apri una di quelle email > menu `⋮` > *Filtra messaggi di questo tipo* > *Crea filtro* > spunta **Applica l'etichetta** e crea l'etichetta **Annunci** (esattamente cosi'). Ripeti per ogni mittente (LinkedIn, Indeed, InfoJobs, inPA). Le email restano nella posta in arrivo.
+3. Gmail > Impostazioni > *Inoltro e POP/IMAP* > controlla che **IMAP sia abilitato**.
+4. In `fonti.json` imposta `"attiva": true` sulla fonte "Alert via email". Non servono nuovi secret: usa gli stessi `SMTP_USER` e `SMTP_PASSWORD` (password per app).
+5. Dopo aver ricevuto la prima email vera, lancia il flusso con la spunta *verifica* e controlla che gli annunci vengano riconosciuti. I modelli dei link in `url_annunci` sono **ipotesi** e possono richiedere un ritocco.
+
+**Cosa legge e cosa no**
+- Apre **solo** l'etichetta `Annunci`, in sola lettura: non segna le email come lette, non le sposta, non le cancella, non le inoltra.
+- Guarda le email degli ultimi 7 giorni (`giorni`) ed estrae solo titoli e link: il testo delle email non viene salvato ne' scritto in `seen.json`.
+- **Attenzione:** una password per app non e' limitata a una parte della casella. Chi ha accesso ai secret del repository potrebbe leggere tutta la posta. Tieni il repository privato e non dare accesso a nessun altro. Se in futuro non ti serve piu', elimina la password per app dalle impostazioni di Google.
+
 ## Limiti
 
 - Non ho potuto provare le fonti reali ne' l'invio email/ntfy dal mio ambiente (rete bloccata): il collaudo e' stato fatto con pagine e feed di prova. Il punto 3 serve a questo.
