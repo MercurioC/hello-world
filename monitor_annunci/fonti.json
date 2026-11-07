@@ -2,6 +2,17 @@
  "_nota": "Gli indirizzi sono DA VERIFICARE ALLA FONTE. Lancia il flusso 'Monitor annunci' a mano: nel log, il passaggio 'Verifica fonti' dice per ognuna se risponde. Tipi: html (elenco di link), rss/atom (feed). 'priorita_zona': 1 Lucca, 2 Pisa/Versilia, 3 Firenze, 9 altro. 'parole': cerca solo queste parole (utile per trovare la pagina 'Lavora con noi'). 'tutti': avvisa di ogni nuovo link della pagina (la prima lettura e' solo un riferimento).",
  "fonti": [
   {
+   "nome": "Alert via email (LinkedIn, Indeed, InfoJobs, inPA)",
+   "tipo": "email",
+   "cartella": "Annunci",
+   "giorni": 7,
+   "url_annunci": ["linkedin\\.com/(comm/)?jobs/view/", "indeed\\.[a-z.]+/(rc/clk|viewjob|m/viewjob|pagead)", "infojobs\\.it/.*of-i", "inpa\\.gov\\.it/.*(bando|concors)"],
+   "priorita_zona": 9,
+   "attiva": false,
+   "verificata_il": null,
+   "nota": "Legge SOLO l'etichetta Gmail 'Annunci', in sola lettura. Attivala (true) dopo aver creato l'etichetta e il filtro: vedi README, sezione 'Alert via email'. I modelli dei link sono ipotesi: con --verifica controlla che trovi gli annunci della prima email reale e correggi url_annunci."
+  },
+  {
    "nome": "Google Alerts - accoglienza musei Lucca",
    "tipo": "rss",
    "url": "INCOLLA-QUI-L-URL-DEL-FEED-RSS-DI-GOOGLE-ALERTS",

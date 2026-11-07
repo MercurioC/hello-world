@@ -16,7 +16,10 @@ Uso:
 """
 import argparse
 import datetime as dt
+import email
+import email.header
 import hashlib
+import imaplib
 import json
 import os
 import re
@@ -157,7 +160,82 @@ def leggi_feed(grezzo):
     return voci
 
 
+MESI_IMAP = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+TITOLI_GENERICI = {"visualizza offerta", "visualizza", "view job", "view", "apply", "candidati",
+                   "vedi annuncio", "vedi offerta", "view all jobs", "see job"}
+
+
+def _url_annuncio_pulito(url):
+    """Toglie i parametri di tracciamento dai link degli annunci nelle email."""
+    p = urllib.parse.urlsplit(url)
+    host = p.netloc.lower()
+    if host.endswith("linkedin.com") or host.endswith("infojobs.it"):
+        return urllib.parse.urlunsplit((p.scheme, p.netloc, p.path, "", ""))
+    if "indeed." in host:
+        jk = urllib.parse.parse_qs(p.query).get("jk")
+        if jk:
+            return urllib.parse.urlunsplit((p.scheme, p.netloc, p.path, "jk=" + jk[0], ""))
+    return pulisci_url(url)
+
+
+def _oggetto(msg):
+    try:
+        return " ".join(str(email.header.make_header(email.header.decode_header(msg.get("Subject", "")))).split())
+    except Exception:
+        return ""
+
+
+def raccogli_email(fonte):
+    """Legge SOLO la cartella/etichetta indicata, in sola lettura (BODY.PEEK), e ne estrae i link."""
+    host = os.environ.get("IMAP_HOST") or "imap.gmail.com"
+    utente = os.environ.get("IMAP_USER") or os.environ.get("SMTP_USER")
+    pwd = os.environ.get("IMAP_PASSWORD") or os.environ.get("SMTP_PASSWORD")
+    if not (utente and pwd):
+        raise RuntimeError("credenziali email non configurate")
+    da = dt.date.today() - dt.timedelta(days=int(fonte.get("giorni", 7)))
+    cerca = f"SINCE {da.day:02d}-{MESI_IMAP[da.month - 1]}-{da.year}"
+    schemi = [re.compile(s, re.I) for s in fonte.get("url_annunci", [])]
+    trovati = {}
+    m = imaplib.IMAP4_SSL(host, timeout=30)
+    try:
+        m.login(utente, pwd)
+        esito, _ = m.select('"' + fonte.get("cartella", "Annunci") + '"', readonly=True)
+        if esito != "OK":
+            raise RuntimeError("etichetta/cartella non trovata")
+        esito, dati = m.search(None, cerca)
+        for num in (dati[0].split() if esito == "OK" and dati and dati[0] else [])[-200:]:
+            esito, msg = m.fetch(num, "(BODY.PEEK[])")
+            if esito != "OK" or not msg or not isinstance(msg[0], tuple):
+                continue
+            em = email.message_from_bytes(msg[0][1])
+            oggetto = _oggetto(em)
+            for parte in em.walk():
+                if parte.get_content_type() != "text/html":
+                    continue
+                html = parte.get_payload(decode=True).decode(parte.get_content_charset() or "utf-8", errors="replace")
+                lettore = _Link("https://localhost/")
+                lettore.feed(html)
+                for titolo, url in lettore.links:
+                    if not url.startswith(("http://", "https://")):
+                        continue
+                    pre = any(s.search(url) for s in schemi)
+                    pulito = _url_annuncio_pulito(url) if pre else pulisci_url(url)
+                    if len(titolo) < 4 or titolo.lower() in TITOLI_GENERICI:
+                        titolo = oggetto or titolo
+                    vecchio = trovati.get(pulito)
+                    if vecchio is None or (len(titolo) > len(vecchio["titolo"]) and titolo.lower() not in TITOLI_GENERICI):
+                        trovati[pulito] = {"titolo": titolo, "url": pulito, "testo": "", "pre": pre or (vecchio or {}).get("pre", False)}
+    finally:
+        try:
+            m.logout()
+        except Exception:
+            pass
+    return list(trovati.values())
+
+
 def raccogli(fonte):
+    if fonte.get("tipo") == "email":
+        return raccogli_email(fonte)
     grezzo, codifica = scarica(fonte["url"])
     if fonte.get("tipo", "html") in ("rss", "atom", "feed"):
         voci = leggi_feed(grezzo)
@@ -175,7 +253,9 @@ def valuta(voce, fonte, filtri):
     testo = norm(voce["titolo"] + " " + voce.get("testo", ""))
     if any(contiene(p, testo) for p in filtri.get("escludi", [])):
         return None
-    if fonte.get("tutti"):
+    if voce.get("pre"):
+        gruppi = ["alert email"]  # link di annuncio in un alert che hai gia' impostato tu
+    elif fonte.get("tutti"):
         gruppi = ["tutte le novita'"]
     elif fonte.get("parole"):
         gruppi = ["pagina lavoro"] if any(contiene(p, testo) for p in fonte["parole"]) else []
@@ -344,7 +424,7 @@ def main():
             stato["errori"][nome] = n
             print(f"[KO] {nome}: {type(e).__name__}: {e}", file=sys.stderr)
             if n == SOGLIA_ERRORI:
-                problemi.append(f"{nome}: non raggiungibile da {n} controlli ({f['url']})")
+                problemi.append(f"{nome}: non raggiungibile da {n} controlli ({f.get('url', f.get('tipo', ''))})")
             continue
         silenziosa = f.get("tutti") and nome not in stato["fonti_inizializzate"]
         trovati = 0
