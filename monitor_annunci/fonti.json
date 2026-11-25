@@ -34,10 +34,11 @@
    "nome": "Finestre sull'Arte - pagina lavoro",
    "tipo": "html",
    "url": "https://www.finestresullarte.info/flash-news/5c-lavoro.php",
+   "parole": ["selezione", "bando", "concorso", "assunzion", "offerta di lavoro", "offerte di lavoro", "cercasi", "cerca ", "posizione", "candidatur", "lavora con"],
    "priorita_zona": 9,
    "attiva": true,
-   "verificata_il": "07/11/2026 (pagina trovata dalla sonda; contenuto da controllare)",
-   "nota": "Trovata dalla verifica del 07/11/2026. Usa i filtri di filtri.json: se i risultati sono pochi o fuori tema, guarda la pagina a mano e regola le parole."
+   "verificata_il": "07/11/2026 (letta: 162 link, ma l'unico trovato era un'intervista, non un annuncio)",
+   "nota": "Dalla verifica del 07/11/2026 la pagina sembra una raccolta di notizie piu' che un elenco di offerte. Ristretta a parole da annuncio; apri la pagina a mano e, se non e' utile, disattivala."
   },
   {
    "nome": "Lucca Crea (esplora pagina lavoro)",
@@ -50,14 +51,14 @@
    "nota": "Sonda: vedi sopra. Sito/dominio da verificare."
   },
   {
-   "nome": "Comune di Lucca (esplora bandi e avvisi)",
+   "nome": "Comune di Lucca - concorsi",
    "tipo": "html",
-   "url": "https://www.comune.lucca.it/",
-   "parole": ["concors", "assunzion", "lavora con noi", "graduatori", "mobilita", "tempo determinato", "tempo indeterminato"],
+   "url": "https://www.comune.lucca.it/argomento/concorsi/",
+   "parole": ["concors", "selezione", "assunzion", "graduatori", "mobilita", "avviso", "tempo determinato", "tempo indeterminato", "bando"],
    "priorita_zona": 1,
    "attiva": true,
-   "verificata_il": "07/11/2026 (la sonda precedente era troppo larga: raccoglieva bandi e contributi non di lavoro)",
-   "nota": "Sonda stretta: segnala solo link che parlano di concorsi e assunzioni. Poi sostituire con la pagina concorsi vera. Verificare chi gestisce IAT e musei civici."
+   "verificata_il": "07/11/2026 (pagina trovata dalla sonda)",
+   "nota": "Pagina concorsi del Comune di Lucca, trovata dalla verifica del 07/11/2026. Controlla a mano che l'elenco sia quello giusto e che non raccolga voci di menu."
   },
   {
    "nome": "Turismo Lucca (esplora pagina lavoro)",
